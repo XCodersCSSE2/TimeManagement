@@ -8,5 +8,20 @@
   	<name>DHXPlanner</name>
   	<tag-class>com.xcoders.tags.DHXPlanner</tag-class>
   	<body-content>empty</body-content>
+  	<attribute>
+  		<name>theme</name>
+  		<type>java.lang.String</type>
+  		<rtexprvalue>true</rtexprvalue>
+  	</attribute>
+  	<attribute>
+  		<name>miniCalendar</name>
+  		<type>boolean</type>
+  		<rtexprvalue>true</rtexprvalue>
+  	</attribute>
+  </tag>
+  <tag>
+  	<name>DHXMiniCalendar</name>
+  	<tag-class>com.xcoders.tags.DHXMiniCalendar</tag-class>
+  	<body-content>empty</body-content>
   </tag>
 </taglib>
