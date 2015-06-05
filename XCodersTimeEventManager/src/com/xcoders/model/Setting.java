@@ -1,5 +1,5 @@
 /* 
- *File info : Entity class to represent Group.
+ *File info : Entity class to represent User Settings.
  *File History
  *----------------------------------------------------
  *date		index	    name	    info
@@ -7,44 +7,36 @@
  *20150604  13208316	ravindu		created.
  *----------------------------------------------------
  */
-
 package com.xcoders.model;
 
+import com.xcoders.model.EventMember;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
-import java.util.List;
-
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: EventGroup
+ * Entity implementation class for Entity: Setting
  *
  */
 @Entity
 
-public class EventGroup implements Serializable {
-
-	private static final long serialVersionUID = 1L; 
+public class Setting implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	   
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	private String name;
-	@ManyToOne(cascade=CascadeType.MERGE)
-	private EventMember owner;
-	@OneToMany(cascade=CascadeType.MERGE)
-	private List<EventMember> members;
+	private String value;
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	private EventMember member;
 	
 
-	public EventGroup() {		
+	public Setting() {
+		super();
 	}   
-	
-	public EventGroup(String name, EventMember owner) {
-		this.name = name;
-		this.owner = owner;
-	}
-
 	public Integer getId() {
 		return this.id;
 	}
@@ -58,6 +50,20 @@ public class EventGroup implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}   
+	public String getValue() {
+		return this.value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}   
+	public EventMember getMember() {
+		return this.member;
+	}
+
+	public void setMember(EventMember member) {
+		this.member = member;
 	}
    
 }
