@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
 </head>
 <body>
-	<a href="calendar.jsp" >Calendar</a> <br/>
+	<a href="calendar.jsp" >Calendar Page</a> <br/><br/><br/>
 	
 	<div class="row">
   <div class="col-md-3"><x:DHXMiniCalendar/></div>
