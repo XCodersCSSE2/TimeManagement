@@ -9,14 +9,14 @@
   	<tag-class>com.xcoders.tags.DHXPlanner</tag-class>
   	<body-content>empty</body-content>
   	<attribute>
-  		<name>theme</name>
-  		<type>java.lang.String</type>
+  		<name>theme</name>  		
   		<rtexprvalue>true</rtexprvalue>
+  		<type>java.lang.String</type>
   	</attribute>
   	<attribute>
-  		<name>miniCalendar</name>
-  		<type>boolean</type>
+  		<name>miniCalendar</name>  		
   		<rtexprvalue>true</rtexprvalue>
+  		<type>boolean</type>
   	</attribute>
   </tag>
   <tag>
