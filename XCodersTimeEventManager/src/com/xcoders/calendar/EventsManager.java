@@ -11,45 +11,62 @@
 package com.xcoders.calendar;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXEventsManager;
+import com.dhtmlx.planner.DHXStatus;
+import com.xcoders.controller.EventJpaController;
+import com.xcoders.model.Event;
 
 public class EventsManager extends DHXEventsManager {
 
-   	public EventsManager(HttpServletRequest request) {
-         	super(request);
-   	}
+	public EventsManager(HttpServletRequest request) {
+		super(request);
+	}
 
-   	@Override
-   	public Iterable getEvents() {
-         	ArrayList events = new ArrayList();
+	@Override
+	public Iterable getEvents() {
+		ArrayList<DHXEvent> dEvents = new ArrayList<DHXEvent>();
 
-         	DHXEvent ev1 = new DHXEvent();
-         	ev1.setId(1);
-         	ev1.setStart_date("06/03/2065 05:00");
-         	ev1.setEnd_date("06/03/2065 09:00");
-         	ev1.setText("Demo event #1");
+		List<Event> events = new EventJpaController().findEventEntities();
+		for (Event event : events) {
+			dEvents.add(new DHXEvent(event.getId(), event.getStartDate(), event
+					.getEndDate(), event.getText()));
+		}
 
-         	DHXEvent ev2 = new DHXEvent();
-         	ev2.setId(2);
-         	ev2.setStart_date("06/04/2065 05:00");
-         	ev2.setEnd_date("06/04/2065 09:00");
-         	ev2.setText("Demo event #2");
+		return dEvents;
+	}
 
-         	DHXEvent ev3 = new DHXEvent();
-         	ev3.setId(3);
-         	ev3.setStart_date("06/05/2065 05:00");
-         	ev3.setEnd_date("06/05/2065 09:00");
-         	ev3.setText("Demo event #3");
+	@Override
+	public DHXStatus saveEvent(DHXEv event, DHXStatus status) {
 
-         	events.add(ev1);
-         	events.add(ev2);
-         	events.add(ev3);
+		Event perEvent = new Event(event.getId(), event.getStart_date(),
+				event.getEnd_date(), event.getText(), null);
+		try {
+			if (status == DHXStatus.UPDATE) {
+				new EventJpaController().edit(perEvent);
+			} else if (status == DHXStatus.INSERT) {
+				new EventJpaController().create(perEvent);
+				event.setId(perEvent.getId());
+			} else if (status == DHXStatus.DELETE) {
+				new EventJpaController().destroy(perEvent.getId());
+			}
+		} catch (Exception e) {
 
-         	return events;
-   	}
+		}
+		return super.saveEvent(event, status);
+	}
+
+	@Override
+	public DHXEv createEvent(String id, DHXStatus status) {
+		return new DHXEvent();
+	}
+
 }

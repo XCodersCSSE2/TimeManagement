@@ -49,6 +49,18 @@ public class Event implements Serializable {
 		this.text = text;
 		this.calendar = calendar;
 	}
+	
+	
+
+	public Event(Integer id, Date startDate, Date endDate, String text,
+			EventCalendar calendar) {
+		super();
+		this.id = id;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.text = text;
+		this.calendar = calendar;
+	}
 
 	public Integer getId() {
 		return this.id;

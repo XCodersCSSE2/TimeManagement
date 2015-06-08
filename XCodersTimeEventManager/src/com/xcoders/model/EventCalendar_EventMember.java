@@ -80,5 +80,10 @@ public class EventCalendar_EventMember implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
+	public void setCalendar(EventCalendar calendar) {
+		this.calendar = calendar;
+	}
    	
 }

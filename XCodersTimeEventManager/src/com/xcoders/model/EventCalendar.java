@@ -80,4 +80,13 @@ public class EventCalendar implements Serializable {
 		Event event = new Event(startDate, endDate, text, this);
 		return event;
 	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+	
 }
