@@ -1,2 +1,3 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
-<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<%@attribute name="onClick" %>
+<button type="button" class="btn btn-default" data-dismiss="modal" onclick="${onClick}">Close</button>

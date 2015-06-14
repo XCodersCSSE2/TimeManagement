@@ -27,6 +27,9 @@ import javax.xml.ws.BindingType;
 public class EventMember implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final int ROLE_ADMIN = 0;
+	public static final int ROLE_USER = 1;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -38,6 +41,7 @@ public class EventMember implements Serializable {
 	private String userName;
 	@Column(nullable = false)
 	private String password;
+	private Integer role = 1;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<EventGroup> groups;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
@@ -164,5 +168,13 @@ public class EventMember implements Serializable {
 			return null;
 		}
 		
+	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 }
