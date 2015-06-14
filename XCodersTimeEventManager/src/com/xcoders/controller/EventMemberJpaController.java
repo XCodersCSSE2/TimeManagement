@@ -245,4 +245,14 @@ public class EventMemberJpaController implements Serializable {
         }
     }
     
+    public EventMember findEventMemberByUserName(String userName){
+    	EntityManager em = getEntityManager();
+        try {
+            Query q = em.createQuery("select m from EventMember m where m.userName = :n ");
+            q.setParameter("n", userName);
+            return (EventMember)q.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }

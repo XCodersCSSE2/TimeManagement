@@ -45,9 +45,9 @@
 	<xf:ModalDialog dialogId="dialogSignin" title="Signin">
 		<xf:ModalDialogBody>
 
-			<xf:TextField id="jname" label="User Name" placeHolder="User Name"
+			<xf:TextField id="jname" label="User Name" placeHolder="User Name" type="text"
 				name="j_username" />
-			<xf:TextField id="jpassword" label="Password" placeHolder="Password"
+			<xf:TextField id="jpassword" label="Password" placeHolder="Password" type="password"
 				name="j_password" />
 
 		</xf:ModalDialogBody>
@@ -97,7 +97,7 @@
 
 	function signup_callback(response) {		
 		
-		if (response == "s") {
+		if (response === "s") {
 			$('#dialogSignup').modal('hide');
 			signup_info_hide();
 		} else {
