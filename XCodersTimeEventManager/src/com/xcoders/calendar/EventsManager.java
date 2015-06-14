@@ -26,9 +26,11 @@ import com.xcoders.controller.EventJpaController;
 import com.xcoders.model.Event;
 
 public class EventsManager extends DHXEventsManager {
-
-	public EventsManager(HttpServletRequest request) {
+	private HttpServletRequest request;
+	
+	public EventsManager(HttpServletRequest request) {		
 		super(request);
+		this.request = request;
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class EventsManager extends DHXEventsManager {
 
 	@Override
 	public DHXStatus saveEvent(DHXEv event, DHXStatus status) {
-
+		
 		Event perEvent = new Event(event.getId(), event.getStart_date(),
 				event.getEnd_date(), event.getText(), null);
 		try {

@@ -1,5 +1,5 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
-
-<div class="modal-footer">
+<%@attribute name="id" %>
+<div class="modal-footer" id="${id}">
 	<jsp:doBody />
 </div>
