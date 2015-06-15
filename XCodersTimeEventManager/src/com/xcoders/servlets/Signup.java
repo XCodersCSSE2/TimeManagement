@@ -24,7 +24,10 @@ import com.xcoders.controller.EventJpaController;
 import com.xcoders.controller.EventMemberJpaController;
 import com.xcoders.model.EventMember;
 
+//(+) 20150615 Ishantha (Start)
 import com.xcoders.util.*; // for use encrypt function in EncryptPassword class
+//(+) 20150615 Ishantha (End)
+
 /**
  * Servlet implementation class Signup
  */
@@ -47,7 +50,9 @@ public class Signup extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
+		//(+) 20150615 Ishantha (Start)
 		try{ // for call hash function
+			//(+) 20150615 Ishantha (End)
 			
 			Boolean parametersValid = true;
 			String reply = "";
@@ -64,14 +69,20 @@ public class Signup extends HttpServlet {
 				reply = "Passwords does not match!";
 			}
 			
+			//(+) 20150615 Ishantha (Start)
 			// encrypting user password
 			String encryptedPassword;
 			encryptedPassword = EncryptPassword.hashPassword(password, "salt");
+			//(+) 20150615 Ishantha (End)
 			
 			//action
 			if(parametersValid){
+				
+				//(+) 20150615 Ishantha (Start)
 				EventMember member = new EventMember(name, email, userName, encryptedPassword); 
 				// change parameter password as encryptedPassword
+				//(+) 20150615 Ishantha (End)
+				
 				try{
 					new EventMemberJpaController().create(member);
 					reply = "s";
@@ -85,7 +96,8 @@ public class Signup extends HttpServlet {
 			//reply
 			System.out.println("A----------------------" + reply);
 			out.print(reply);
-			
+		
+			//(+) 20150615 Ishantha (Start)
 		}// end try block use for call hash function 
 		catch (NoSuchAlgorithmException e1) {			
 			e1.printStackTrace();
@@ -96,7 +108,7 @@ public class Signup extends HttpServlet {
 		finally{
 			out.close();
 		}
-		
+		//(+) 20150615 Ishantha (End)
 	}
 
 }
