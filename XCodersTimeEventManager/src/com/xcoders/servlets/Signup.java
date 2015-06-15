@@ -11,6 +11,8 @@ package com.xcoders.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +24,7 @@ import com.xcoders.controller.EventJpaController;
 import com.xcoders.controller.EventMemberJpaController;
 import com.xcoders.model.EventMember;
 
+import com.xcoders.util.*; // for use encrypt function in EncryptPassword class
 /**
  * Servlet implementation class Signup
  */
@@ -43,7 +46,9 @@ public class Signup extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		try{
+		
+		try{ // for call hash function
+			
 			Boolean parametersValid = true;
 			String reply = "";
 			
@@ -59,9 +64,14 @@ public class Signup extends HttpServlet {
 				reply = "Passwords does not match!";
 			}
 			
+			// encrypting user password
+			String encryptedPassword;
+			encryptedPassword = EncryptPassword.hashPassword(password, "salt");
+			
 			//action
 			if(parametersValid){
-				EventMember member = new EventMember(name, email, userName, password);
+				EventMember member = new EventMember(name, email, userName, encryptedPassword); 
+				// change parameter password as encryptedPassword
 				try{
 					new EventMemberJpaController().create(member);
 					reply = "s";
@@ -75,7 +85,15 @@ public class Signup extends HttpServlet {
 			//reply
 			System.out.println("A----------------------" + reply);
 			out.print(reply);
-		}finally{
+			
+		}// end try block use for call hash function 
+		catch (NoSuchAlgorithmException e1) {			
+			e1.printStackTrace();
+		} 
+		catch (InvalidKeySpecException e1) {		
+			e1.printStackTrace();
+		}
+		finally{
 			out.close();
 		}
 		
