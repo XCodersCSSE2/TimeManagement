@@ -4,7 +4,8 @@
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
- *20650613  13208316	ravindu		created.
+ *20150615  13208221    Ishantha    encrypted password.
+ *20150613  13208316	ravindu		created.
  *----------------------------------------------------
  */
 package com.xcoders.servlets;
@@ -50,9 +51,9 @@ public class Signup extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		//(+) 20150615 Ishantha (Start)
-		try{ // for call hash function
-			//(+) 20150615 Ishantha (End)
+		
+		try{ 
+			
 			
 			Boolean parametersValid = true;
 			String reply = "";
@@ -70,7 +71,7 @@ public class Signup extends HttpServlet {
 			}
 			
 			//(+) 20150615 Ishantha (Start)
-			// encrypting user password
+			//encrypting user password
 			String encryptedPassword;
 			encryptedPassword = EncryptPassword.hashPassword(password, "salt");
 			//(+) 20150615 Ishantha (End)
@@ -82,8 +83,11 @@ public class Signup extends HttpServlet {
 				EventMember member = new EventMember(name, email, userName, encryptedPassword); 
 				// change parameter password as encryptedPassword
 				//(+) 20150615 Ishantha (End)
-				
+				//(-) 20150615 Ishantha (Start)
+				//EventMember member = new EventMember(name, email, userName, password); 
+				//(-) 20150615 Ishantha (End)
 				try{
+					System.out.println("memebr id : " + member.getId());
 					new EventMemberJpaController().create(member);
 					reply = "s";
 				}catch(Exception e){
@@ -97,18 +101,18 @@ public class Signup extends HttpServlet {
 			System.out.println("A----------------------" + reply);
 			out.print(reply);
 		
-			//(+) 20150615 Ishantha (Start)
-		}// end try block use for call hash function 
-		catch (NoSuchAlgorithmException e1) {			
+		//(+) 20150615 Ishantha (Start)
+		}catch (NoSuchAlgorithmException e1) {			
 			e1.printStackTrace();
 		} 
 		catch (InvalidKeySpecException e1) {		
 			e1.printStackTrace();
 		}
+		//(+) 20150615 Ishantha (End)
 		finally{
 			out.close();
 		}
-		//(+) 20150615 Ishantha (End)
+		
 	}
 
 }

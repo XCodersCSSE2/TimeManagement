@@ -41,19 +41,19 @@
 	<!-- /.container-fluid -->
 </nav>
 
-<form name=abc action="j_security_check" method=post>
+<form  action="j_security_check" method=post id="signin_form">
 	<xf:ModalDialog dialogId="dialogSignin" title="Signin">
 		<xf:ModalDialogBody>
 
 			<xf:TextField id="jname" label="User Name" placeHolder="User Name" type="text"
 				name="j_username" />
 			<xf:TextField id="jpassword" label="Password" placeHolder="Password" type="password"
-				name="j_password" />
+				name="j_password"  />
 
 		</xf:ModalDialogBody>
 		<xf:ModalDialogFooter>
 			<xf:ModalDialogCloseButton />
-			<button type="submit" class="btn btn-primary">Signin</button>
+			<button type="button" onclick="signin_submit()" class="btn btn-primary">Signin</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
 </form>
@@ -124,6 +124,20 @@
 		_("userName").value = "";
 		_("password").value = "";
 		_("retypePassword").value = "";
+	}
+	
+	var login_callback_called = false;
+	function signin_submit(){
+		var params = {
+				password : _("jpassword").value
+			};
+		ajaxPost("Encrypt", params, signin_submit_callback);
+	}
+	
+	function signin_submit_callback(response){
+		_("jpassword").value = response;
+		login_callback_called = true;
+		_("signin_form").submit();
 	}
 </script>
 
