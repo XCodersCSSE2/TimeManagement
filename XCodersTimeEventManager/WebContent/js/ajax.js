@@ -29,7 +29,7 @@ function ajaxPost(action, params, callback) {
 	request.open("POST", action, true);
 	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	request.onload = function(){
-		callback( request.responseText );
+		callback( request.responseText,params );
 	}
 	request.send(queryString);
 }

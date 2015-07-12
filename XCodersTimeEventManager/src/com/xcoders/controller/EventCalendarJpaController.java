@@ -4,6 +4,7 @@
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
+ *20150612 	13208367	vijani		added method findCalendarByMember
  *20150604  13208316	ravindu		created.
  *----------------------------------------------------
  */
@@ -171,5 +172,32 @@ public class EventCalendarJpaController implements Serializable {
             em.close();
         }
     }
+    
+
+    // (+) 13208367 Vijani (start) 
+    public List<EventCalendar> findCalendarByMember(String memberName){
+    	EntityManager em = null;
+    	try{
+    		em = getEntityManager();
+	    	EventMemberJpaController emjc = new EventMemberJpaController();
+	    	
+	    	Query query = em.createQuery("select c from EventCalendar c where c.owner.name = :name");
+	    	query.setParameter("name", memberName);
+	    	List<EventCalendar> calendarList = query.getResultList();
+	    	/*List<EventCalendar> eventCalendarList = new ArrayList<EventCalendar>();
+	    	for(EventCalendar_EventMember ec : resultList){
+	    		if(ec.getMember().getId()==member_id)
+	    			eventCalendarList.add(ec.getCalendar());
+	    		else
+	    			eventCalendarList.add(null);
+	    	}*/
+	    	return calendarList;
+    	}finally{
+    		if(em!=null){
+    			em.close();
+    		}
+    	}
+    }
+    // (+) 13208367 Vijani (end) 
     
 }
