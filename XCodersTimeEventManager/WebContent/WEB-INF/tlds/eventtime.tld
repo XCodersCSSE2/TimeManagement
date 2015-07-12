@@ -19,6 +19,7 @@
   		<type>boolean</type>
   	</attribute>
   </tag>
+  
   <tag>
   	<name>DHXMiniCalendar</name>
   	<tag-class>com.xcoders.tags.DHXMiniCalendar</tag-class>

@@ -1,10 +1,10 @@
 /* 
- *File info : Ajax servlet to create a new calendar.
+ *File info : Ajax servlet to delete a calendar.
  *File History
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
- *20650613  13208316	ravindu		created.
+ *20150712  13208316	ravindu		created.
  *----------------------------------------------------
  */
 package com.xcoders.servlets;
@@ -19,31 +19,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xcoders.controller.EventCalendarJpaController;
-import com.xcoders.controller.EventMemberJpaController;
 import com.xcoders.model.EventCalendar;
-import com.xcoders.model.EventMember;
 
 /**
- * Servlet implementation class CreateCalendar
+ * Servlet implementation class DeleteCalendar
  */
-@WebServlet("/CreateCalendar")
-public class CreateCalendar extends HttpServlet {
+@WebServlet("/DeleteCalendar")
+public class DeleteCalendar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DeleteCalendar() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CreateCalendar() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
@@ -51,13 +47,9 @@ public class CreateCalendar extends HttpServlet {
 			String reply = "";
 
 			// get parameters
-			String name = request.getParameter("name");
-
+			Integer id = new Integer(request.getParameter("id"));
 			// validate
-			if (name.trim().isEmpty()) {
-				reply = "Please enter a calendar name!";
-				parametersValid = false;
-			}
+			
 
 			// action
 			if (parametersValid) {
@@ -67,11 +59,8 @@ public class CreateCalendar extends HttpServlet {
 					if (user == null) {
 						reply = "Please login!";
 					} else {
-						System.out.println(">>> USer : " + user);
-						EventMember em = new EventMemberJpaController()
-								.findEventMemberByUserName(user);
-						EventCalendar calendar = new EventCalendar(name, em);
-						new EventCalendarJpaController().create(calendar);
+						EventCalendarJpaController ecj = new EventCalendarJpaController();
+						ecj.destroy(id);						
 						reply = "s";
 					}
 				} catch (Exception e) {
@@ -80,10 +69,10 @@ public class CreateCalendar extends HttpServlet {
 				}
 
 			}
-
+		
 			// reply
 			out.print(reply);
-		} finally {
+		}finally {
 			out.close();
 		}
 	}
