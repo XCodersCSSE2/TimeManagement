@@ -1,12 +1,12 @@
 /* 
- *File info : Ajax servlet to create a new calendar.
+ *File info : Ajax servlet to edit a calendar.
  *File History
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
- *20650613  13208316	ravindu		created.
+ *20150712  13208316	ravindu		created.
  *----------------------------------------------------
- */
+*/
 package com.xcoders.servlets;
 
 import java.io.IOException;
@@ -24,26 +24,24 @@ import com.xcoders.model.EventCalendar;
 import com.xcoders.model.EventMember;
 
 /**
- * Servlet implementation class CreateCalendar
+ * Servlet implementation class EditCalendar
  */
-@WebServlet("/CreateCalendar")
-public class CreateCalendar extends HttpServlet {
+@WebServlet("/EditCalendar")
+public class EditCalendar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public EditCalendar() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CreateCalendar() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		try {
@@ -52,7 +50,7 @@ public class CreateCalendar extends HttpServlet {
 
 			// get parameters
 			String name = request.getParameter("name");
-
+			Integer id = new Integer(request.getParameter("id"));
 			// validate
 			if (name.trim().isEmpty()) {
 				reply = "Please enter a calendar name!";
@@ -67,11 +65,10 @@ public class CreateCalendar extends HttpServlet {
 					if (user == null) {
 						reply = "Please login!";
 					} else {
-						System.out.println(">>> USer : " + user);
-						EventMember em = new EventMemberJpaController()
-								.findEventMemberByUserName(user);
-						EventCalendar calendar = new EventCalendar(name, em);
-						new EventCalendarJpaController().create(calendar);
+						EventCalendarJpaController ecj = new EventCalendarJpaController();
+						EventCalendar calendar = ecj.findEventCalendar(id);
+						calendar.setName(name);
+						ecj.edit(calendar);
 						reply = "s";
 					}
 				} catch (Exception e) {
@@ -80,10 +77,10 @@ public class CreateCalendar extends HttpServlet {
 				}
 
 			}
-
+		
 			// reply
 			out.print(reply);
-		} finally {
+		}finally {
 			out.close();
 		}
 	}

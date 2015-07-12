@@ -15,6 +15,7 @@
 
 <%@taglib prefix="x" uri="/WEB-INF/tlds/eventtime"%>
 <%@taglib prefix="xf" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE>
 <html>
 <head>
@@ -39,10 +40,10 @@
 						Calendar Options <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
-						<li>
-							<xf:ModalDialogToggleText dialogId="newCalendar" text="Create New Calendar"/>
-						</li>
-						<li><a href="#">Delete Calendar</a></li>
+						<li><xf:ModalDialogToggleText dialogId="newCalendar"
+								text="Create New Calendar" /></li>
+						<li><xf:ModalDialogToggleText dialogId="deleteCalendars"
+								text="Delete Calendar" /></li>
 						<li class="divider"></li>
 						<li><a href="#">Export Calendar</a></li>
 					</ul>
@@ -50,13 +51,27 @@
 					<button type="button" class="btn btn-default">Right</button>
 				</div>
 			</div>
-			<div class="row" style="padding: 10px;margin-left: 5px">
+			<div class="row" style="padding: 10px; margin-left: 5px">
 				<div class="list-group" id="calendarList">
-					<a class="list-group-item">My Calendar</a>
-					<a class="list-group-item">Work</a>
-					<a class="list-group-item">Meetings</a>
-					<a class="list-group-item">New Calendar1</a>
-					<a class="list-group-item">New Calendar2</a>
+					<c:forEach items="${calendarList}" var="c">
+						<a class="list-group-item" id="a_c_${c.id}">
+						   <span id="c_${c.id}" >${c.name}</span>
+							<div class="btn-group btn-group-sm" role="group" aria-label="..." style="float: right;">
+
+								<button type="button" class="btn btn-default" onclick="edit_calendar_copy_id(${c.id},'${c.name}')" 
+									data-toggle="modal" data-target="#editCalendar">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+								</button>								
+								<button type="button" class="btn btn-info">
+									<span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+								</button>
+								<button type="button" class="btn btn-danger" onclick="delete_calendar_copy_id(${c.id},'${c.name}')"
+									data-toggle="modal" data-target="#deleteCalendar">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+							</div>
+						</a>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -66,57 +81,75 @@
 			<x:DHXPlanner theme="terrace" miniCalendar="true" />
 		</div>
 	</div>
+	<!--Dialog to create calendar  -->
 	<xf:ModalDialog dialogId="newCalendar" title="Create New Calendar">
 		<xf:ModalDialogBody>
-			<form >
-				<xf:TextField id="calendarName" label="Calendar Name" type="text" placeHolder="Name of the new calendar"/>
+			<form>
+				<xf:TextField id="calendarName" label="Calendar Name" type="text"
+					placeHolder="Name of the new calendar" />
 			</form>
-			<div class="alert" role="alert" id="create_calendar_info" style="display: none" ></div>
+			<div class="alert" role="alert" id="create_calendar_info"
+				style="display: none"></div>
 		</xf:ModalDialogBody>
 		<xf:ModalDialogFooter id="create_calendar_footer">
-			<xf:ModalDialogCloseButton/>
+			<xf:ModalDialogCloseButton />
 			<button class="btn btn-primary" onclick="create_calendar()">Create</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
+	
+	<!--Dialog to edit calendar  -->
+	<xf:ModalDialog dialogId="editCalendar" title="Edit Calendar">
+		<xf:ModalDialogBody>
+			<form>
+				<input type="hidden" id="editCalendarId" />
+				<xf:TextField id="editCalendarName" label="Calendar Name" type="text"
+					placeHolder="Name of the new calendar" />
+			</form>
+			<div class="alert" role="alert" id="edit_calendar_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="edit_calendar_footer">
+			<xf:ModalDialogCloseButton />
+			<button class="btn btn-primary" onclick="edit_calendar()">Save Changes</button>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
+
+	<!-- Dialog to delete calendar -->
+	 <xf:ModalDialog dialogId="deleteCalendars" title="Delete Calendars">
+		<xf:ModalDialogBody>
+			<table class="table table-striped table-bordered table-condensed "
+				style="font-size: 14px">
+				<c:forEach items="${calendarList}" var="c">
+					<tr>
+						<td style="width: 10px"><input type="checkbox"></td>
+						<td>${c.name}</td>
+					</tr>
+				</c:forEach>
+			</table>
+			<div class="alert" role="alert" id="delete_calendars_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="delete_calendars_footer">
+			<xf:ModalDialogCloseButton />
+			<button class="btn btn-danger" onclick="delete_calendars()">Delete</button>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
+	
+	<!-- Dialog to confirm delete calendar -->
+	<xf:ModalDialog dialogId="deleteCalendar" title="Delete Calendar">
+		<xf:ModalDialogBody>
+			<p>Are you sure you want to delete Calendar <span id="deleteCalendarName"></span> ? 
+			This will delete all its events along with it.</p>
+			<input type="hidden" id="deleteCalendarId" />
+			<div class="alert" role="alert" id="delete_calendar_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody >
+		<xf:ModalDialogFooter id="delete_calendar_footer">
+			<xf:ModalDialogCloseButton text="Cancel"/>
+			<button class="btn btn-danger" onclick="delete_calendar()">Delete</button>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
 	<xf:JSImports />
-	<script>
-		function create_calendar(){
-			create_calendar_info_show("Please Wait...", "info", true);
-			
-			var params = {
-				name : _("calendarName").value
-			};
-			ajaxPost("CreateCalendar", params, create_calendar_callback);
-
-		}
-
-		function create_calendar_callback(response) {		
-			if (response === "s") {
-				$('#newCalendar').modal('hide');
-				_("calendarList").innerHTML += "<a class=\"list-group-item\">" + _("calendarName").value + "</a>" ;
-				signup_info_hide();
-			} else {
-				create_calendar_info_show(response, "warning", false);
-			}
-		}
-		
-		function create_calendar_info_show(message,type,hide_footer){
-			_("create_calendar_info").setAttribute("class", "alert alert-" + type);
-			_("create_calendar_info").innerHTML = message;
-			_("create_calendar_info").style.display = "";
-			if(hide_footer){
-				_("create_calendar_footer").style.display = "none";
-			}else{
-				_("create_calendar_footer").style.display = "";
-			}
-		}
-		
-		function create_calendar_info_hide(){
-			_("create_calendar_info").style.display = "none";
-			_("create_calendar_footer").style.display = "";
-			_("calendarName").value = "";
-
-		}
-	</script>
+	<script src="./js/calendar.js"></script>
 </body>
 </html>
