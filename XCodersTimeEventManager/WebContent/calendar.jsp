@@ -4,6 +4,7 @@
  ----------------------------------------------------
  date		index	    name	    info
  ----------------------------------------------------
+ 20150715  13208221 Ishantha    map view
  20150604  13208316	ravindu		created.
  ----------------------------------------------------
  --%>
@@ -151,5 +152,10 @@
 	</xf:ModalDialog>
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
+	
+	<%-- (+) 20150715 Ishantha (Start) --%>
+	<script src="./js/map.js"></script>
+	<%-- (+) 20150715 Ishantha (End) --%>
+
 </body>
 </html>
