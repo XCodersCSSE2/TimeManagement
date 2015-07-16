@@ -4,14 +4,25 @@
  *----------------------------------------------------
  *date		  index	      name	       info
  *----------------------------------------------------
+ *20150716   13208221	 Ishantha	  add location field to lightbox.
  *20150715   13208221	 Ishantha	  created.
  *----------------------------------------------------
  */
-
 	scheduler.config.serverLists = {};
 	scheduler.locale.labels.map_tab = 'Map';
-	name= "map";
-
+	name= "map";	
+	
+	//(+) 20150716 Ishantha (Start) 
+	scheduler.locale.labels.section_description = 'Description';
+	scheduler.locale.labels.section_time = 'Time period';
+	scheduler.locale.labels.section_event_location = 'Location';
+	scheduler.config.lightbox.sections = [
+		{"map_to":"text", "name":"description", "type":"textarea", "height":200},
+		{"map_to":"auto", "name":"time", "type":"time", "height":72},
+		{"map_to":"event_location", "name":"event_location", "type":"textarea", "height":40}
+	];
+	//(+) 20150716 Ishantha (End) 
+	
 	scheduler.config.skin = 'terrace';
 	scheduler.init('scheduler_here',new Date(2015, 6, 4, 10, 51, 57));
 	scheduler.config.prevent_cache = true;
