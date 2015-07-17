@@ -173,4 +173,18 @@ public class EventJpaController implements Serializable {
         }
     }
     
+    public List<Event> findDefaultCalendarEvents(String userName){
+    	EntityManager em = getEntityManager();
+    	try{
+    		Query q = em.createQuery("select e from Event e where e.calendar.id = "+
+    					"(select s.value from Setting s where s.member.userName = :uname and s.name = :name )");
+    		q.setParameter("uname", userName);
+    		q.setParameter("name", "default-calendar");
+    		return q.getResultList();
+    	}finally{
+    		em.close();
+    	}
+    	
+    }
+    
 }

@@ -172,4 +172,19 @@ public class SettingJpaController implements Serializable {
         }
     }
     
+    public Setting findSettingByName(String userName,String name){
+    	EntityManager em = getEntityManager();
+        try {
+           Query q = em.createQuery("select s from Setting s where s.member.userName = :uname and s.name = :name");
+           q.setParameter("uname",userName);
+           q.setParameter("name", name);
+                     
+           return (Setting)q.getSingleResult();
+        } catch(Exception e){
+        	return null;
+        }finally {
+            em.close();
+        }
+    }
+    
 }

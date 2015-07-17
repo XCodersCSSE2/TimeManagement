@@ -21,10 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xcoders.controller.EventCalendarJpaController;
 import com.xcoders.controller.EventJpaController;
 import com.xcoders.controller.EventMemberJpaController;
+import com.xcoders.controller.SettingJpaController;
+import com.xcoders.model.EventCalendar;
 import com.xcoders.model.EventMember;
-
+import com.xcoders.model.Setting;
 //(+) 20150615 Ishantha (Start)
 import com.xcoders.util.*; // for use encrypt function in EncryptPassword class
 //(+) 20150615 Ishantha (End)
@@ -89,6 +92,13 @@ public class Signup extends HttpServlet {
 				try{
 					System.out.println("memebr id : " + member.getId());
 					new EventMemberJpaController().create(member);
+					EventCalendar calendar = new EventCalendar("My Calendar", member);
+					new EventCalendarJpaController().create(calendar);
+					Setting setting = new Setting();
+					setting.setName("default-calendar");
+					setting.setValue(calendar.getId().toString());									
+					setting.setMember(member);
+					new SettingJpaController().create(setting);
 					reply = "s";
 				}catch(Exception e){
 					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + e.getMessage());

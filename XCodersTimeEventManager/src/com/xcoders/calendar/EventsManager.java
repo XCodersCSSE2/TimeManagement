@@ -20,10 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dhtmlx.planner.DHXEv;
 import com.dhtmlx.planner.DHXEvent;
+import com.dhtmlx.planner.DHXEventRec;
 import com.dhtmlx.planner.DHXEventsManager;
 import com.dhtmlx.planner.DHXStatus;
+import com.xcoders.controller.EventCalendarJpaController;
 import com.xcoders.controller.EventJpaController;
+import com.xcoders.controller.SettingJpaController;
 import com.xcoders.model.Event;
+import com.xcoders.model.EventCalendar;
+import com.xcoders.model.Setting;
 
 public class EventsManager extends DHXEventsManager {
 	private HttpServletRequest request;
@@ -35,12 +40,19 @@ public class EventsManager extends DHXEventsManager {
 
 	@Override
 	public Iterable getEvents() {
-		ArrayList<DHXEvent> dEvents = new ArrayList<DHXEvent>();
+		ArrayList<GUIEvent> dEvents = new ArrayList<GUIEvent>();
 
-		List<Event> events = new EventJpaController().findEventEntities();
+		List<Event> events = new EventJpaController().findDefaultCalendarEvents(request.getRemoteUser());
 		for (Event event : events) {
-			dEvents.add(new DHXEvent(event.getId(), event.getStartDate(), event
-					.getEndDate(), event.getText()));
+			GUIEvent eventRec = new GUIEvent();
+			eventRec.setId(event.getId());
+			eventRec.setText(event.getText());
+			eventRec.setStart_date(event.getStartDate());
+			eventRec.setEnd_date(event.getEndDate());
+			eventRec.setEvent_pid(event.getEventPid());
+			eventRec.setEvent_length(event.getEventLength());
+			eventRec.setRec_type(event.getRecType());
+			dEvents.add(eventRec);
 		}
 
 		return dEvents;
@@ -48,27 +60,49 @@ public class EventsManager extends DHXEventsManager {
 
 	@Override
 	public DHXStatus saveEvent(DHXEv event, DHXStatus status) {
-		
-		Event perEvent = new Event(event.getId(), event.getStart_date(),
-				event.getEnd_date(), event.getText(), null);
+		GUIEvent devent = (GUIEvent) event;
+		EventJpaController ejp = new EventJpaController();
+		Event perEvent;
+		System.out.println("devent.getId() ::: " + devent.getId());
+		if(status == DHXStatus.INSERT){
+			System.out.println("Insert");
+			perEvent = new Event();
+		}else{
+			System.out.println("update");
+			perEvent = ejp.findEvent(devent.getId());
+		}
+		perEvent.setText(devent.getText());
+		perEvent.setStartDate(devent.getStart_date());
+		perEvent.setEndDate(devent.getEnd_date());
+		perEvent.setEventPid(devent.getEvent_pid());
+		perEvent.setEventLength(devent.getEvent_length());
+		perEvent.setRecType(devent.getRec_type());
+
 		try {
 			if (status == DHXStatus.UPDATE) {
-				new EventJpaController().edit(perEvent);
+				ejp.edit(perEvent);
 			} else if (status == DHXStatus.INSERT) {
-				new EventJpaController().create(perEvent);
+				Setting calendarSetting = new SettingJpaController().findSettingByName(request.getRemoteUser(), "default-calendar");
+				Integer calendarId = new Integer(calendarSetting.getValue());
+				EventCalendarJpaController ecjpac = new EventCalendarJpaController();				
+				EventCalendar calendar = ecjpac.findEventCalendar(calendarId);
+				calendar.getEvents().add(perEvent);
+				perEvent.setCalendar(calendar);				
+				ejp.create(perEvent);
+				ecjpac.edit(calendar);
 				event.setId(perEvent.getId());
 			} else if (status == DHXStatus.DELETE) {
-				new EventJpaController().destroy(perEvent.getId());
+				ejp.destroy(perEvent.getId());
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return super.saveEvent(event, status);
 	}
 
 	@Override
 	public DHXEv createEvent(String id, DHXStatus status) {
-		return new DHXEvent();
+		return new GUIEvent();
 	}
 
 }

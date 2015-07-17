@@ -9,11 +9,14 @@
  */
 package com.xcoders.model;
 
+import com.dhtmlx.planner.DHXEventRec;
 import com.xcoders.model.EventCalendar;
+
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Date;
+
 import javax.persistence.*;
 
 /**
@@ -36,7 +39,12 @@ public class Event implements Serializable {
 	private String text;
 	@ManyToOne(cascade=CascadeType.MERGE)
 	private EventCalendar calendar;
-	
+	private Integer eventLength;
+	private Integer eventPid;
+	private String recType;
+	private String locationX;
+	private String locationY;
+	private String address;
 
 	public Event() {
 	}   
@@ -48,6 +56,7 @@ public class Event implements Serializable {
 		this.endDate = endDate;
 		this.text = text;
 		this.calendar = calendar;
+		
 	}
 	
 	
@@ -96,6 +105,54 @@ public class Event implements Serializable {
 
 	public void setCalendar(EventCalendar calendar) {
 		this.calendar = calendar;
+	}
+
+	public Integer getEventLength() {
+		return eventLength;
+	}
+
+	public void setEventLength(Integer eventLength) {
+		this.eventLength = eventLength;
+	}
+
+	public Integer getEventPid() {
+		return eventPid;
+	}
+
+	public void setEventPid(Integer eventPid) {
+		this.eventPid = eventPid;
+	}
+
+	public String getRecType() {
+		return recType;
+	}
+
+	public void setRecType(String recType) {
+		this.recType = recType;
+	}
+
+	public String getLocationX() {
+		return locationX;
+	}
+
+	public void setLocationX(String locationX) {
+		this.locationX = locationX;
+	}
+
+	public String getLocationY() {
+		return locationY;
+	}
+
+	public void setLocationY(String locationY) {
+		this.locationY = locationY;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
    
 }
