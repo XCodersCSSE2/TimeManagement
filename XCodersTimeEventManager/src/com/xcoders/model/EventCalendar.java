@@ -82,6 +82,9 @@ public class EventCalendar implements Serializable {
 	}
 
 	public List<Event> getEvents() {
+		if(events == null){
+			events = new ArrayList<Event>();
+		}
 		return events;
 	}
 

@@ -20,6 +20,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import com.dhtmlx.planner.*;
 import com.dhtmlx.planner.controls.DHXMiniCalendar;
 import com.dhtmlx.planner.data.DHXDataFormat;
+import com.dhtmlx.planner.extensions.DHXExtension;
 
 
 public class DHXPlanner extends SimpleTagSupport {
@@ -72,7 +73,8 @@ public class DHXPlanner extends SimpleTagSupport {
 		s.setInitialDate(new Date());
 		s.load("events.jsp", DHXDataFormat.JSON);
 		s.data.dataprocessor.setURL("events.jsp");
-
+		s.extensions.add(DHXExtension.READONLY);
+		s.extensions.add(DHXExtension.RECURRING);
 		if(miniCalendar){
 			DHXMiniCalendar cal = new DHXMiniCalendar("miniCalendar");
 			cal.setNavigation(true);

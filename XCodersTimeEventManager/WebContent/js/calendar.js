@@ -125,3 +125,15 @@ function delete_calendar_info_hide() {
 	_("delete_calendar_footer").style.display = "";
 	_("deleteCalendarId").value = "";	
 }
+
+function setDefaultCalendar(id){
+	var params = {
+			name : "default-calendar",
+			value : id
+		};
+		ajaxPost("SaveSetting", params, setDefaultCalendar_callback);
+}
+
+function setDefaultCalendar_callback(id){
+	location.reload();
+}
