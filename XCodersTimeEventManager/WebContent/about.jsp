@@ -5,7 +5,7 @@
  date		index	    name	    info
  ----------------------------------------------------
  20150604  13208316	ravindu		created.
-  20150713  13208367 vijani		added page content.
+ 20150713  13208367 vijani		added page content.
  ----------------------------------------------------
  --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -71,7 +71,7 @@
 			<div class = "featurette" id = "about5">
 				<img class = "featurette-image img-circle img-responsive pull-right" src="images/ishantha.jpg">
 				<h2 class = "featurette-heading"> Ishantha Priyamal
-					<span class = "text-muted">13208224</span>
+					<span class = "text-muted">13208221</span>
 				</h2>
 			</div></td></tr></table>	
 			
