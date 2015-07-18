@@ -63,11 +63,9 @@
 			<div class="row" style="padding: 10px; margin-left: 5px">
 				<div class="list-group" id="calendarList">
 					<c:forEach items="${calendarList}" var="c">
-						<a class="list-group-item" id="a_c_${c.id}"
-							onclick="setDefaultCalendar(${c.id});" style="cursor: pointer;">
-							<span id="c_${c.id}">${c.name}</span>
-							<div class="btn-group btn-group-sm" role="group" aria-label="..."
-								style="float: right;">
+						<a class="list-group-item" id="a_c_${c.id}" >
+							<span id="c_${c.id}" onclick="setDefaultCalendar(${c.id});" style="cursor: pointer;">${c.name}</span>
+							<div class="btn-group btn-group-sm" role="group" aria-label="..."	style="float: right;">
 
 								<button type="button" class="btn btn-default"
 									onclick="edit_calendar_copy_id(${c.id},'${c.name}')"
