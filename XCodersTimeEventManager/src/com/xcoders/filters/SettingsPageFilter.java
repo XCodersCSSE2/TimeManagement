@@ -1,6 +1,7 @@
 package com.xcoders.filters;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -18,14 +19,14 @@ import com.xcoders.model.EventCalendar;
 import com.xcoders.model.Setting;
 
 /**
- * Servlet Filter implementation class CalendarPageFilter
+ * Servlet Filter implementation class SettingsPageFilter
  */
-public class CalendarPageFilter implements Filter {
+public class SettingsPageFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public CalendarPageFilter() {
+    public SettingsPageFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -44,19 +45,21 @@ public class CalendarPageFilter implements Filter {
 		// place your code here
 		HttpServletRequest req = (HttpServletRequest)request;
 		if(req.getRemoteUser() != null ){
-			EventCalendarJpaController calendarJpaController = new EventCalendarJpaController();
-			List<EventCalendar> calendars = calendarJpaController.findCalendarByMember(req.getRemoteUser());
-			
+			//EventCalendarJpaController calendarJpaController = new EventCalendarJpaController();
+			//List<EventCalendar> calendars = calendarJpaController.findCalendarByMember(req.getRemoteUser());
+			List<String> appThemes = Arrays.asList("silver");
+			List<String> plannerThemes = Arrays.asList("terrace","classic","glossy");
 			
 			SettingJpaController sjc = new SettingJpaController();
 			Setting themeApp = sjc.findSettingByName(req.getRemoteUser(), "theme_app");
 			Setting themePlanner = sjc.findSettingByName(req.getRemoteUser(), "theme_planner");
 			
-			
-			request.setAttribute("calendarList", calendars);
+			request.setAttribute("appThemes", appThemes);
+			request.setAttribute("plannerThemes", plannerThemes);
 			request.setAttribute("theme_app", themeApp.getValue());
 			request.setAttribute("theme_planner", themePlanner.getValue());
 		}
+
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}

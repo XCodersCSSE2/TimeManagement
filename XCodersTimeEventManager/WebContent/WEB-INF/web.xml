@@ -12,6 +12,14 @@
     <filter-name>CalendarPageFilter</filter-name>
     <url-pattern>/calendar.jsp</url-pattern>
   </filter-mapping>
+  <filter>
+    <filter-name>SettingsPageFilter</filter-name>
+    <filter-class>com.xcoders.filters.SettingsPageFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SettingsPageFilter</filter-name>
+    <url-pattern>/settings.jsp</url-pattern>
+  </filter-mapping>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>res1</web-resource-name>

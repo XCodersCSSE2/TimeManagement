@@ -18,7 +18,7 @@
 		{"map_to":"auto", "name":"time", "type":"time", "height":72},
 		{"map_to":"event_location", "name":"event_location", "type":"textarea", "height":40}
 	];		
-	scheduler.config.skin = 'terrace';
+	//scheduler.config.skin = 'terrace';
 	scheduler.init('scheduler_here',new Date(2015, 6, 4, 10, 51, 57));
 	scheduler.config.prevent_cache = true;
 	scheduler.load("events.jsp", "json");

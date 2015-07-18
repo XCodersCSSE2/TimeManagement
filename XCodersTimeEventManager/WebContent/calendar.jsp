@@ -37,7 +37,7 @@
 				<div class="btn-group" role="group" aria-label="...">
 
 					<button type="button" class="btn btn-default dropdown-toggle"
-						data-toggle="dropdown" aria-expanded="false">
+						data-toggle="dropdown" aria-expanded="false" style="height: 34px">
 						Calendar Options <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
@@ -48,25 +48,37 @@
 						<li class="divider"></li>
 						<li><a href="#">Export Calendar</a></li>
 					</ul>
-					<button type="button" class="btn btn-default">Middle</button>
-					<button type="button" class="btn btn-default">Right</button>
+					<form action="about.jsp" style="display: inline;">
+						<button type="submit" class="btn btn-default" style="height: 34px">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
+					</form>
+					<form action="settings.jsp" style="display: inline;">
+						<button type="submit" class="btn btn-default" style="height: 34px">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						</button>
+					</form>
 				</div>
 			</div>
 			<div class="row" style="padding: 10px; margin-left: 5px">
 				<div class="list-group" id="calendarList">
 					<c:forEach items="${calendarList}" var="c">
-						<a class="list-group-item" id="a_c_${c.id}" onclick="setDefaultCalendar(${c.id});" style="cursor: pointer;">
-						   <span id="c_${c.id}" >${c.name}</span>
-							<div class="btn-group btn-group-sm" role="group" aria-label="..." style="float: right;">
+						<a class="list-group-item" id="a_c_${c.id}"
+							onclick="setDefaultCalendar(${c.id});" style="cursor: pointer;">
+							<span id="c_${c.id}">${c.name}</span>
+							<div class="btn-group btn-group-sm" role="group" aria-label="..."
+								style="float: right;">
 
-								<button type="button" class="btn btn-default" onclick="edit_calendar_copy_id(${c.id},'${c.name}')" 
+								<button type="button" class="btn btn-default"
+									onclick="edit_calendar_copy_id(${c.id},'${c.name}')"
 									data-toggle="modal" data-target="#editCalendar">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
-								</button>								
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</button>
 								<button type="button" class="btn btn-info">
 									<span class="glyphicon glyphicon-share" aria-hidden="true"></span>
 								</button>
-								<button type="button" class="btn btn-danger" onclick="delete_calendar_copy_id(${c.id},'${c.name}')"
+								<button type="button" class="btn btn-danger"
+									onclick="delete_calendar_copy_id(${c.id},'${c.name}')"
 									data-toggle="modal" data-target="#deleteCalendar">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</button>
@@ -79,7 +91,7 @@
 
 		<div class="col-md-9"
 			style="border-left-style: solid; border-left-width: 1px; border-left-color: silver;">
-			<x:DHXPlanner theme="terrace" miniCalendar="true" />
+			<x:DHXPlanner theme="${theme_planner}" miniCalendar="true" />
 		</div>
 	</div>
 	<!--Dialog to create calendar  -->
@@ -97,26 +109,27 @@
 			<button class="btn btn-primary" onclick="create_calendar()">Create</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
-	
+
 	<!--Dialog to edit calendar  -->
 	<xf:ModalDialog dialogId="editCalendar" title="Edit Calendar">
 		<xf:ModalDialogBody>
 			<form>
 				<input type="hidden" id="editCalendarId" />
-				<xf:TextField id="editCalendarName" label="Calendar Name" type="text"
-					placeHolder="Name of the new calendar" />
+				<xf:TextField id="editCalendarName" label="Calendar Name"
+					type="text" placeHolder="Name of the new calendar" />
 			</form>
 			<div class="alert" role="alert" id="edit_calendar_info"
 				style="display: none"></div>
 		</xf:ModalDialogBody>
 		<xf:ModalDialogFooter id="edit_calendar_footer">
 			<xf:ModalDialogCloseButton />
-			<button class="btn btn-primary" onclick="edit_calendar()">Save Changes</button>
+			<button class="btn btn-primary" onclick="edit_calendar()">Save
+				Changes</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
 
 	<!-- Dialog to delete calendar -->
-	 <xf:ModalDialog dialogId="deleteCalendars" title="Delete Calendars">
+	<xf:ModalDialog dialogId="deleteCalendars" title="Delete Calendars">
 		<xf:ModalDialogBody>
 			<table class="table table-striped table-bordered table-condensed "
 				style="font-size: 14px">
@@ -135,24 +148,27 @@
 			<button class="btn btn-danger" onclick="delete_calendars()">Delete</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
-	
+
 	<!-- Dialog to confirm delete calendar -->
 	<xf:ModalDialog dialogId="deleteCalendar" title="Delete Calendar">
 		<xf:ModalDialogBody>
-			<p>Are you sure you want to delete Calendar <span id="deleteCalendarName"></span> ? 
-			This will delete all its events along with it.</p>
+			<p>
+				Are you sure you want to delete Calendar <span
+					id="deleteCalendarName"></span> ? This will delete all its events
+				along with it.
+			</p>
 			<input type="hidden" id="deleteCalendarId" />
 			<div class="alert" role="alert" id="delete_calendar_info"
 				style="display: none"></div>
-		</xf:ModalDialogBody >
+		</xf:ModalDialogBody>
 		<xf:ModalDialogFooter id="delete_calendar_footer">
-			<xf:ModalDialogCloseButton text="Cancel"/>
+			<xf:ModalDialogCloseButton text="Cancel" />
 			<button class="btn btn-danger" onclick="delete_calendar()">Delete</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
-	
+
 	<%-- (+) 20150715 Ishantha (Start) --%>
 	<script src="./js/map.js"></script>
 	<%-- (+) 20150715 Ishantha (End) --%>

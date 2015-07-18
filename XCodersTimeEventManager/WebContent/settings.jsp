@@ -29,12 +29,23 @@
 	</xf:TabPanel>
 		<xf:TabBody>
 			<xf:Tab name="Theme" active="true">
-				Theme Settings 
+				<form style="padding: 20px">
+					<xf:Dropdown id="app_theme" label="Application Theme" value="${theme_app}" list="${appThemes}" width="200px"/>
+					<xf:Dropdown id="planner_theme" label="Planner theme" value="${theme_planner}" list="${plannerThemes}"  width="200px"/>
+					<div class="form-group">
+					<button type="button" class="btn btn-default" onclick="reset_settings()">Reset</button>
+					<button type="button" class="btn btn-primary" onclick="save_app_theme()">Save Changes</button>
+					
+					</div>
+				</form>
+				<div class="alert alert-info" role="alert" id="settings_info"
+				style="display: none">Saving settings...</div>
 			</xf:Tab>
 			<xf:Tab name="Account">
 				Account Settings 
 			</xf:Tab>
 		</xf:TabBody>
 	<xf:JSImports />
+	<script src="./js/settings.js"></script>
 </body>
 </html>
