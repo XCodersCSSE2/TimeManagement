@@ -58,8 +58,8 @@ public class EventsManager extends DHXEventsManager {
 			
 			//(+) 20150718 Ishantha (Start)
 			eventRec.setEvent_location(event.getAddress());
-			eventRec.setLat(event.getLocationX());
-			eventRec.setLng(event.getLocationY());
+			eventRec.setLng(event.getLocationX());
+			eventRec.setLat(event.getLocationY());
 			//(+) 20150718 Ishantha (End)
 			
 			dEvents.add(eventRec);
@@ -90,8 +90,8 @@ public class EventsManager extends DHXEventsManager {
 		
 		//(+) 20150718 Ishantha (Start)
 		perEvent.setAddress(devent.getEvent_location());
-		perEvent.setLocationX(devent.getLat());
-		perEvent.setLocationY(devent.getLng());
+		perEvent.setLocationX(devent.getLng());
+		perEvent.setLocationY(devent.getLat());
 		//(+) 20150718 Ishantha (End)
 
 		try {
