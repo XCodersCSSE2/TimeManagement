@@ -4,6 +4,7 @@
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
+ *20150718  13208316	ravindu		create default settings on signup.
  *20150615  13208221    Ishantha    encrypted password.
  *20150613  13208316	ravindu		created.
  *----------------------------------------------------
@@ -94,14 +95,31 @@ public class Signup extends HttpServlet {
 					new EventMemberJpaController().create(member);
 					EventCalendar calendar = new EventCalendar("My Calendar", member);
 					new EventCalendarJpaController().create(calendar);
-					Setting setting = new Setting();
-					setting.setName("default-calendar");
-					setting.setValue(calendar.getId().toString());									
-					setting.setMember(member);
-					new SettingJpaController().create(setting);
+					
+					//(+)20150718 ravindu (Start)
+					Setting setting1 = new Setting();
+					setting1.setName("default-calendar");
+					setting1.setValue(calendar.getId().toString());									
+					setting1.setMember(member);
+					
+					Setting setting2 = new Setting();
+					setting2.setName("theme_app ");
+					setting2.setValue("silver");									
+					setting2.setMember(member);
+					
+					Setting setting3 = new Setting();
+					setting3.setName("theme_planner");
+					setting3.setValue("terrace");									
+					setting3.setMember(member);
+					
+					SettingJpaController sjc = new SettingJpaController();
+					sjc.create(setting1);
+					sjc.create(setting2);
+					sjc.create(setting3);
+					//(+)20150718 ravindu (End)
 					reply = "s";
 				}catch(Exception e){
-					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + e.getMessage());
+					System.out.println("registration error :" + e.getMessage());
 					reply = "Error";
 				}
 									
