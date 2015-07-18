@@ -4,7 +4,8 @@
  *----------------------------------------------------
  *date		index	    name	    info
  *----------------------------------------------------
- *20650604  13208316	ravindu		created.
+ *20150718  13208221    Ishantha    save & retrieve location in db.
+ *20150604  13208316	ravindu		created.
  *----------------------------------------------------
  */
 
@@ -23,6 +24,7 @@ import com.dhtmlx.planner.DHXEvent;
 import com.dhtmlx.planner.DHXEventRec;
 import com.dhtmlx.planner.DHXEventsManager;
 import com.dhtmlx.planner.DHXStatus;
+import com.dhtmlx.planner.controls.DHXMapView;
 import com.xcoders.controller.EventCalendarJpaController;
 import com.xcoders.controller.EventJpaController;
 import com.xcoders.controller.SettingJpaController;
@@ -32,6 +34,7 @@ import com.xcoders.model.Setting;
 
 public class EventsManager extends DHXEventsManager {
 	private HttpServletRequest request;
+	DHXMapView view = new DHXMapView();
 	
 	public EventsManager(HttpServletRequest request) {		
 		super(request);
@@ -52,6 +55,13 @@ public class EventsManager extends DHXEventsManager {
 			eventRec.setEvent_pid(event.getEventPid());
 			eventRec.setEvent_length(event.getEventLength());
 			eventRec.setRec_type(event.getRecType());
+			
+			//(+) 20150718 Ishantha (Start)
+			eventRec.setEvent_location(event.getAddress());
+			eventRec.setLat(event.getLocationX());
+			eventRec.setLng(event.getLocationY());
+			//(+) 20150718 Ishantha (End)
+			
 			dEvents.add(eventRec);
 		}
 
@@ -77,6 +87,12 @@ public class EventsManager extends DHXEventsManager {
 		perEvent.setEventPid(devent.getEvent_pid());
 		perEvent.setEventLength(devent.getEvent_length());
 		perEvent.setRecType(devent.getRec_type());
+		
+		//(+) 20150718 Ishantha (Start)
+		perEvent.setAddress(devent.getEvent_location());
+		perEvent.setLocationX(devent.getLat());
+		perEvent.setLocationY(devent.getLng());
+		//(+) 20150718 Ishantha (End)
 
 		try {
 			if (status == DHXStatus.UPDATE) {
