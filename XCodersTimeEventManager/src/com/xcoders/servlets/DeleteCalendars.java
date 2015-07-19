@@ -25,14 +25,14 @@ import com.xcoders.model.EventCalendar;
 /**
  * Servlet implementation class DeleteCalendar
  */
-@WebServlet("/DeleteCalendar")
-public class DeleteCalendar extends HttpServlet {
+@WebServlet("/DeleteCalendars")
+public class DeleteCalendars extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteCalendar() {
+    public DeleteCalendars() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,7 +48,8 @@ public class DeleteCalendar extends HttpServlet {
 			String reply = "";
 
 			// get parameters
-			Integer id = new Integer(request.getParameter("id"));
+			String idString = request.getParameter("ids");
+			String[] ids = idString.split(";");
 			// validate
 			
 
@@ -60,11 +61,13 @@ public class DeleteCalendar extends HttpServlet {
 					if (user == null) {
 						reply = "Please login!";
 					} else {
-						EventCalendarJpaController ecj = new EventCalendarJpaController();
-						ecj.destroy(id);						
+						for(String id : ids){
+							EventCalendarJpaController ecj = new EventCalendarJpaController();
+							ecj.destroy(Integer.parseInt(id));		
+						}
 						reply = "s";
 					}
-				} catch (Exception e) {
+				}catch (Exception e) {
 					if(e.getMessage().contains("foreign key constraint fails")) {
 						reply = "Cannot delete as the calendar is shared with other users";
 					}else{

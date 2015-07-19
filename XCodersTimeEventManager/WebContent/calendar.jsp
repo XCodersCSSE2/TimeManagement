@@ -149,11 +149,12 @@
 	<xf:ModalDialog dialogId="deleteCalendars" title="Delete Calendars">
 		<xf:ModalDialogBody>
 			<table class="table table-striped table-bordered table-condensed "
-				style="font-size: 14px">
+				style="font-size: 14px" id="del_table">
 				<c:forEach items="${calendarList}" var="c">
 					<tr>
 						<td style="width: 10px"><input type="checkbox"></td>
 						<td>${c.name}</td>
+						<td style="display: none">${c.id}</td>
 					</tr>
 				</c:forEach>
 			</table>
