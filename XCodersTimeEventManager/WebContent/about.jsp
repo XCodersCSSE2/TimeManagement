@@ -4,8 +4,8 @@
  ----------------------------------------------------
  date		index	    name	    info
  ----------------------------------------------------
- 20150604  13208316	ravindu		created.
  20150713  13208367 vijani		added page content.
+ 20150604  13208316	ravindu		created.
  ----------------------------------------------------
  --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -36,7 +36,24 @@
 	<!--   (+) Vijani (start) -->
 	
 	<div class = "container">
-	<table align="center"><tr><td>
+	<center><h3><span class = "text-muted">
+	We are team <b>Xcoders</b>, reading for BSc in Computer Science  at National School
+	of Business Management which is affricated with <b>University College Dublin, Ireland. </b> 
+	We have taken effort on this project <b>Implementation of Online Event Calendar</b>, 
+	which has to be done for our module <b>Software Engineering Project II</b> under the guidance of 
+	our module coordinator Dr. Michael Whelan.
+	</span></h3></center>
+	<table align="center">
+	<tr><td>
+		<hr class = "featurette-divider">
+			<div class = "featurette" id = "about">
+				<img class = "featurette-image img-circle img-responsive pull-right" src="images/sir.jpg"/>
+				<h2 class = "featurette-heading"> Dr. Michael Whelan<br>
+					<span class = "text-muted">Module Coordinator</span>
+				</h2>
+			</div>
+	</tr></td>
+	<tr><td>
 		<hr class = "featurette-divider">
 			<div class = "featurette" id = "about">
 				<img class = "featurette-image img-circle img-responsive pull-right" src="images/ravindu.jpg"/>
