@@ -175,15 +175,19 @@ public class EventCalendarJpaController implements Serializable {
     
 
     // (+) 13208367 Vijani (start) 
-    public List<EventCalendar> findCalendarByMember(String memberName){
+    public List<EventCalendar> findCalendarByMember(String userName){
     	EntityManager em = null;
     	try{
     		em = getEntityManager();
 	    	EventMemberJpaController emjc = new EventMemberJpaController();
 	    	
-	    	Query query = em.createQuery("select c from EventCalendar c where c.owner.name = :name");
-	    	query.setParameter("name", memberName);
+	    	Query query = em.createQuery("select c from EventCalendar c where c.owner.userName = :name");
+	    	query.setParameter("name", userName);
 	    	List<EventCalendar> calendarList = query.getResultList();
+	    	
+	    	Query query2 = em.createQuery("select r.calendar from EventCalendar_EventMember r where r.member.userName = :name");
+	    	query2.setParameter("name", userName);
+	    	List<EventCalendar> calendarList2 = query2.getResultList();
 	    	/*List<EventCalendar> eventCalendarList = new ArrayList<EventCalendar>();
 	    	for(EventCalendar_EventMember ec : resultList){
 	    		if(ec.getMember().getId()==member_id)
@@ -191,6 +195,7 @@ public class EventCalendarJpaController implements Serializable {
 	    		else
 	    			eventCalendarList.add(null);
 	    	}*/
+	    	calendarList.addAll(calendarList2);
 	    	return calendarList;
     	}finally{
     		if(em!=null){

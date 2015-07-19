@@ -23,6 +23,7 @@
 				<c:when test="${!empty pageContext.request.remoteUser}">
 					<li><a href="calendar.jsp">My Calendar</a></li>
 					<li><a href="settings.jsp">Settings</a></li>
+					<li><a href="about.jsp">About</a></li>
 					<li><a href="SignOut">Sign out</a></li>
 				</c:when>
 				<c:otherwise>
@@ -30,11 +31,9 @@
 							text="Signin" /></li>
 					<li><xf:ModalDialogToggleText dialogId="dialogSignup"
 							text="Signup" /></a></li>
+				    <li><a href="about.jsp">About</a></li>
 				</c:otherwise>
-			</c:choose>
-
-
-			<li><a href="about.jsp">About</a></li>
+			</c:choose>			
 		</ul>
 		<!-- /.navbar-collapse -->
 	</div>

@@ -63,23 +63,42 @@
 			<div class="row" style="padding: 10px; margin-left: 5px">
 				<div class="list-group" id="calendarList">
 					<c:forEach items="${calendarList}" var="c">
-						<a class="list-group-item" id="a_c_${c.id}" >
-							<span id="c_${c.id}" onclick="setDefaultCalendar(${c.id});" style="cursor: pointer;">${c.name}</span>
-							<div class="btn-group btn-group-sm" role="group" aria-label="..."	style="float: right;">
+						<a class="list-group-item" id="a_c_${c.id}">
+							<div class="row">
+								<div class="col-sm-6" id="c_${c.id}" onclick="setDefaultCalendar(${c.id});"
+										style="cursor: pointer;">
+									<span >${c.name}</span>
+								</div>
+								<div class="col-sm-6">
+									<div class="btn-group btn-group-sm" role="group"
+										aria-label="..." style="float: right;">
 
-								<button type="button" class="btn btn-default"
-									onclick="edit_calendar_copy_id(${c.id},'${c.name}')"
-									data-toggle="modal" data-target="#editCalendar">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-info">
-									<span class="glyphicon glyphicon-share" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-danger"
-									onclick="delete_calendar_copy_id(${c.id},'${c.name}')"
-									data-toggle="modal" data-target="#deleteCalendar">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
+										<button type="button" class="btn btn-default"
+											onclick="edit_calendar_copy_id(${c.id},'${c.name}')"
+											data-toggle="modal" data-target="#editCalendar">
+											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+										</button>
+										<button type="button"
+											onclick="share_calendar_copy_id(${c.id},'${c.name}')"
+											<c:choose>
+										<c:when test="${c.owner.userName eq pageContext.request.remoteUser}" >
+											class="btn btn-info"
+											data-toggle="modal" data-target="#shareCalendar"
+										</c:when>
+										<c:otherwise>
+											class="btn"
+											data-toggle="tooltip" data-placement="top" title="This calendar is shared to you by ${c.owner.userName}"
+										</c:otherwise>
+									</c:choose>>
+											<span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+										</button>
+										<button type="button" class="btn btn-danger"
+											onclick="delete_calendar_copy_id(${c.id},'${c.name}')"
+											data-toggle="modal" data-target="#deleteCalendar">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</button>
+									</div>
+								</div>
 							</div>
 						</a>
 					</c:forEach>
@@ -164,6 +183,43 @@
 			<button class="btn btn-danger" onclick="delete_calendar()">Delete</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
+
+	<!-- Dialog to share calendar -->
+	<xf:ModalDialog dialogId="shareCalendar" title="Share Calendar">
+		<xf:ModalDialogBody>
+			<p>
+				Share <span id="shareCalendarName"></span> with :
+			<p>
+			<form>
+				<xf:TextField id="member_select" label="" />
+				<div class="form-group">
+					<label for=""></label>
+					<button type="button" class="btn btn-default"
+						onclick="share_add_member()">Add Member</button>
+				</div>
+			</form>
+			<div style="overflow: scroll; height: 200px;">
+				<table
+					class="table table-striped table-bordered table-hover table-condensed"
+					id="share_table">
+					<tr>
+						<th></th>
+						<th style="width: 10px"></th>
+					</tr>
+
+				</table>
+			</div>
+			<input type="hidden" id="shareCalendarId" />
+			<br />
+			<div class="alert" role="alert" id="share_calendar_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="share_calendar_footer">
+			<xf:ModalDialogCloseButton />
+			<button class="btn btn-primary" onclick="share_calendar()">Share</button>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
+
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
 

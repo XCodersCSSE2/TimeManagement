@@ -255,4 +255,16 @@ public class EventMemberJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<EventMember> findEventMemberByUserNameLike(String userName,Integer limit){
+    	EntityManager em = getEntityManager();
+        try {
+            Query q = em.createQuery("select m from EventMember m where m.userName like :u limit :n ");
+            q.setParameter("u", userName);
+            q.setParameter("n", limit);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
