@@ -4,6 +4,7 @@
  ----------------------------------------------------
  date		index	    name	    info
  ----------------------------------------------------
+ 20150716  13208367	Vijani		export to pdf
  20150715  13208221 Ishantha    map view
  20150604  13208316	ravindu		created.
  ----------------------------------------------------
@@ -46,7 +47,14 @@
 						<li><xf:ModalDialogToggleText dialogId="deleteCalendars"
 								text="Delete Calendar" /></li>
 						<li class="divider"></li>
-						<li><a href="#">Export Calendar</a></li>
+						<!-- (+) Vijani (start) -->
+						<li><xf:ModalDialogToggleText dialogId="exportPDF"
+								text="Export Calendar as PDF" />
+						<!-- (+) Vijani (end) -->
+						<!-- (-) Vijani (start) -->
+						<!-- <a href="#">Export Calendar</a>-->
+						<!-- (-) Vijani (start) -->
+						</li>
 					</ul>
 					<form action="about.jsp" style="display: inline;">
 						<button type="submit" class="btn btn-default" style="height: 34px">
@@ -184,6 +192,34 @@
 			<button class="btn btn-danger" onclick="delete_calendar()">Delete</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
+	
+	 <!-- (+) Vijani (start) -->
+	<!-- Dialog to export calendar to PDF -->
+	<xf:ModalDialog dialogId="exportPDF" title="Export Calendar as PDF">
+		<xf:ModalDialogBody>
+		<p>Select Calendars you want to export as PDF</p>
+		<form>
+		
+			<table class="table table-striped table-bordered table-condensed "
+				style="font-size: 14px" id="del_table">
+				<c:forEach items="${calendarList}" var="c">
+					<tr>
+						<td style="width: 10px"><input type="checkbox"></td>
+						<td>${c.name}</td>
+						<td style="display: none">${c.id}</td>
+					</tr>
+				</c:forEach>
+			</table>
+			
+		</form>
+    </xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="exportPDF_footer">
+			<xf:ModalDialogCloseButton text="Cancel"/>
+			<button class="btn btn-primary" onclick="export_PDF()">Export</button>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
+	
+	<!-- (+) Vijani (end) -->
 
 	<!-- Dialog to share calendar -->
 	<xf:ModalDialog dialogId="shareCalendar" title="Share Calendar">
