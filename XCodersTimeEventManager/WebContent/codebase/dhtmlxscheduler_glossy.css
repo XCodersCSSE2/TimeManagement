@@ -1609,8 +1609,15 @@ input.dhx_repeat_checkbox {
 	text-decoration:none;
 }
 .dhx_cal_navline .dhx_cal_date{
+	/*(-)20150719 ravindu (Start)
 	padding-top:4px;
 	left:230px;
+	(-)20150719 ravindu (End)*/
+	/*(+)20150719 ravindu (Start)*/
+	padding-top:0px;
+	left:0px;
+	top:-5px;
+	/*(+)20150719 ravindu (End)*/
 }
 .dhx_cal_tab{
 	background-image:url(imgs_glossy/white_tab.png);
