@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Settings</title>
 <xf:CSSImports />
 </head>
 <body>
@@ -23,8 +23,7 @@
 	<xf:PageHeader subtext="use this page to edit your settings" text="Settings" />
 	<xf:TabPanel>
 		<xf:TabList>
-			<xf:TabName name="Theme" active="true"/>	
-			<xf:TabName name="Account"></xf:TabName>
+			<xf:TabName name="Theme" active="true"/>			
 		</xf:TabList>
 	</xf:TabPanel>
 		<xf:TabBody>
@@ -40,10 +39,7 @@
 				</form>
 				<div class="alert alert-info" role="alert" id="settings_info"
 				style="display: none">Saving settings...</div>
-			</xf:Tab>
-			<xf:Tab name="Account">
-				Account Settings 
-			</xf:Tab>
+			</xf:Tab>		
 		</xf:TabBody>
 	<xf:JSImports />
 	<script src="./js/settings.js"></script>

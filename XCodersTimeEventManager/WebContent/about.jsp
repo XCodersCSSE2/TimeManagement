@@ -16,7 +16,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>About</title>
 <xf:CSSImports />
 </head>
 <body>

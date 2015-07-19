@@ -4156,9 +4156,10 @@ scheduler._render_v_bar = function (id, x, y, w, h, style, contentA, contentB, b
 		container = d.firstChild;
 
 		var inner_html = '<div class="dhx_event_move dhx_header" style=" width:' + (w - 6) + 'px;' + bg_color + '" >&nbsp;</div>';
-		inner_html += '<div class="dhx_event_move dhx_title" style="' + bg_color + '' + color + '">' + contentA + '</div>';
-		inner_html += '<div class="dhx_body" style=" width:' + (w - (this._quirks ? 4 : 14)) + 'px; height:' + (h - (this._quirks ? 20 : 30) + 1) + 'px;' + bg_color + '' + color + '">' + contentB + '</div>'; // +2 css specific, moved from render_event
-
+		//(+/-)20150719 ravindu (Start)
+		inner_html += '<div class="dhx_event_move dhx_title" style="font-size:10px;' + bg_color + '' + color + '">' + contentA + '</div>';
+		inner_html += '<div class="dhx_body" style=" width:' + (w - (this._quirks ? 4 : 14) + 10) + 'px; height:' + (h - (this._quirks ? 20 : 30) + 1) + 'px;' + bg_color + '' + color + '">' + contentB + '</div>'; // +2 css specific, moved from render_event
+		//(+/-)20150719 ravindu (End)
 		var footer_class = "dhx_event_resize dhx_footer";
 		if (bottom)
 			footer_class = "dhx_resize_denied " + footer_class;
