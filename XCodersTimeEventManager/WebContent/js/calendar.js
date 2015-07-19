@@ -13,8 +13,9 @@ function create_calendar_callback(response, params) {
 	if (response === "s") {
 		$('#newCalendar').modal('hide');
 		_("calendarList").innerHTML += "<a class=\"list-group-item\">"
-				+ _("calendarName").value + "</a>";
+				+ _("calendarName").value + "</a>";	
 		create_calendar_info_hide();
+		location.reload();
 	} else {
 		create_calendar_info_show(response, "warning", false);
 	}
@@ -124,6 +125,59 @@ function delete_calendar_info_hide() {
 	_("delete_calendar_info").style.display = "none";
 	_("delete_calendar_footer").style.display = "";
 	_("deleteCalendarId").value = "";
+}
+
+//delete multiple calenders at once
+function delete_calendars(){
+	var table = _("del_table");
+	var idList = "";
+	for (i = 0; i < table.rows.length; i++) {
+		if(table.rows[i].cells[0].getElementsByTagName("input")[0].checked){
+			idList += table.rows[i].cells[2].innerHTML + ";";
+		}		
+	}
+	idList = idList.substring(0, idList.length - 1);
+	alert(idList);
+	delete_calendars_info_show("Please Wait...", "info", true);
+
+	var params = {
+		ids : idList
+	};
+	ajaxPost("DeleteCalendars", params, delete_calendars_callback);
+}
+
+function delete_calendars_callback(response, params) {
+	if (response === "s") {
+		$('#deleteCalendars').modal('hide');
+		delete_calendars_info_hide();
+		var table = _("del_table");
+		while(table.rows.length > 1) {
+			  table.deleteRow(1);
+		}
+		var ids = params.ids.split(";");
+		for(i = 0 ; i < ids.length;i++){
+			_("a_c_" + ids[i]).style.display = "none";
+		}
+		delete_calendar_info_hide();
+	} else {
+		delete_calendars_info_show(response, "warning", false);
+	}
+}
+
+function delete_calendars_info_show(message, type, hide_footer) {
+	_("delete_calendars_info").setAttribute("class", "alert alert-" + type);
+	_("delete_calendars_info").innerHTML = message;
+	_("delete_calendars_info").style.display = "";
+	if (hide_footer) {
+		_("delete_calendars_footer").style.display = "none";
+	} else {
+		_("delete_calendars_footer").style.display = "";
+	}
+}
+
+function delete_calendars_info_hide() {
+	_("delete_calendars_info").style.display = "none";
+	_("delete_calendars_footer").style.display = "";
 }
 
 // share calendar functions
