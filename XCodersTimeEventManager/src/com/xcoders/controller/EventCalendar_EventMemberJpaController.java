@@ -172,4 +172,43 @@ public class EventCalendar_EventMemberJpaController implements Serializable {
         }
     }
     
+    public Boolean recordExists(Integer calendarId,String userName) {
+        EntityManager em = getEntityManager();
+        try {        	
+        	Query q = em.createQuery("select count(r) from EventCalendar_EventMember r where r.calendar.id = :id and r.member.userName = :n ");
+        	q.setParameter("id", calendarId);
+        	q.setParameter("n", userName);
+            Integer count = ((Long) q.getSingleResult()).intValue();
+            return count > 0 ? true : false ;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<EventCalendar_EventMember> findRecordsByCalendar(Integer calendarId) {
+        EntityManager em = getEntityManager();
+        try {        	
+        	Query q = em.createQuery("select r from EventCalendar_EventMember r where r.calendar.id = :id ");
+        	q.setParameter("id", calendarId);
+        	
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Integer deleteRecordsByCalendar(Integer calendarId) {
+        EntityManager em = getEntityManager();
+        try {     
+        	em.getTransaction().begin();
+        	Query q = em.createQuery("delete from EventCalendar_EventMember r where r.calendar.id = :id ");
+        	q.setParameter("id", calendarId);
+        	Integer count = q.executeUpdate();
+        	em.getTransaction().commit();
+            return count;
+        } finally {
+            em.close();
+        }
+    }
+    
 }
