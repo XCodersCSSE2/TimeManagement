@@ -75,6 +75,10 @@ public class DHXPlanner extends SimpleTagSupport {
 		s.data.dataprocessor.setURL("events.jsp");
 		s.extensions.add(DHXExtension.READONLY);
 		s.extensions.add(DHXExtension.RECURRING);
+		s.extensions.add(DHXExtension.ICAL);
+		s.toICal("ical.jsp");
+		s.extensions.add(DHXExtension.PDF);
+		s.toPDF();
 		if(miniCalendar){
 			DHXMiniCalendar cal = new DHXMiniCalendar("miniCalendar");
 			cal.setNavigation(true);
