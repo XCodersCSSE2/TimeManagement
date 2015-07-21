@@ -115,7 +115,7 @@
 		</div>
 
 		<div class="col-md-9"
-			style="border-left-style: solid; border-left-width: 1px; border-left-color: silver;">
+			style="border-left-style: solid; border-left-width: 1px; border-left-color: silver;">			
 			<x:DHXPlanner theme="${theme_planner}" miniCalendar="true" />
 		</div>
 	</div>
@@ -259,7 +259,9 @@
 
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
-
+	<script src="./codebase/ext/dhtmlxscheduler_pdf.js"></script>
+	<script src="./codebase/ext/dhtmlxscheduler_serialize.js"></script>
+	<script src="./codebase/ext/dhtmlxscheduler_minical.js"></script>
 	<%-- (+) 20150715 Ishantha (Start) --%>
 	<script src="./js/map.js"></script>
 	<%-- (+) 20150715 Ishantha (End) --%>
