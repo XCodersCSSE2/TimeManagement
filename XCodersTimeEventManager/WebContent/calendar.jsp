@@ -4,6 +4,8 @@
  ----------------------------------------------------
  date		index	    name	    info
  ----------------------------------------------------
+ 20150720  13208221 Ishantha    import xml
+ 20150719  13208221 Ishantha    export as an XML
  20150716  13208367	Vijani		export to pdf
  20150715  13208221 Ishantha    map view
  20150604  13208316	ravindu		created.
@@ -54,6 +56,17 @@
 						<!-- (-) Vijani (start) -->
 						<!-- <a href="#">Export Calendar</a>-->
 						<!-- (-) Vijani (start) -->
+						
+						<!-- (+) 20150719 Ishantha (Start) -->
+						<xf:ModalDialogToggleText dialogId="exportxml"
+								text="Export Calendar as an XML" />				
+						<!-- (+) 20150719 Ishantha (End) -->
+						
+						<!-- (+) 20150720 Ishantha (Start) -->
+						<xf:ModalDialogToggleText dialogId="importxml"
+								text="Import XML" />				
+						<!-- (+) 20150720 Ishantha (End) -->
+						
 						</li>
 					</ul>
 					<form action="about.jsp" style="display: inline;">
@@ -256,12 +269,57 @@
 			<button class="btn btn-primary" onclick="share_calendar()">Share</button>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
+	
+	<!-- (+) 20150719 Ishantha (Start) -->
+	<!-- Dialog to export calendar as an XML-->
+	<xf:ModalDialog dialogId="exportxml" title="Export Calendars as an XML">
+		<xf:ModalDialogBody>
+		<form name="exportxmlform" method="POST" action="ExportXML" target="_blank">
+			<table class="table table-striped table-bordered table-condensed "
+				style="font-size: 14px" id="exportxml_table">
+				<c:forEach items="${calendarList}" var="c">
+					<tr>
+						<td style="width: 10px"><input type="checkbox"></td>
+						<td>${c.name}</td>
+						<td style="display: none">${c.id}</td>
+					</tr>
+				</c:forEach>
+			</table>
+			<div class="alert" role="alert" id="exportxml_calendars_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="exportxml_calendars_footer">
+			<xf:ModalDialogCloseButton />
+			<button class="btn btn-primary" >Export as an XML</button>
+		</xf:ModalDialogFooter>
+		</form>
+	</xf:ModalDialog>
+	<!-- (+) 20150719 Ishantha (End) -->
+	
+	<!-- (+) 20150720 Ishantha (Start) -->
+	<!--Dialog to import XML File  -->
+	<xf:ModalDialog dialogId="importxml" title="Import XML File">
+		<xf:ModalDialogBody>
+		<H5>Browse your xml file</H5>
+			<form name="importxmlform" method="POST" action="ImportXML" enctype="multipart/form-data">
+				<input class= "btn btn-default" type="file" name="file" size="60" />		
+			<div class="alert" role="alert" id="import_xml_info"
+				style="display: none"></div>
+		</xf:ModalDialogBody>
+		<xf:ModalDialogFooter id="import_xml_footer">
+			<xf:ModalDialogCloseButton />
+			<button class="btn btn-primary" >Import</button>
+			</form>
+		</xf:ModalDialogFooter>
+	</xf:ModalDialog>
+	
 
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
 	<script src="./codebase/ext/dhtmlxscheduler_pdf.js"></script>
 	<script src="./codebase/ext/dhtmlxscheduler_serialize.js"></script>
 	<script src="./codebase/ext/dhtmlxscheduler_minical.js"></script>
+	
 	<%-- (+) 20150715 Ishantha (Start) --%>
 	<script src="./js/map.js"></script>
 	<%-- (+) 20150715 Ishantha (End) --%>
