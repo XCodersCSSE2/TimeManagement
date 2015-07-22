@@ -36,3 +36,25 @@ function save_themes_callback(response,params) {
 function reset_settings(){
 	location.reload();
 }
+
+// (+) vijani (start) 
+function save_account_settings(){
+	_("profile_info").style.display = "";
+	var params = {
+			oldPassword : _("oldPassword").value,
+			newPassword : _("newPassword").value,
+			retypeNewPassword : _("retypeNewPassword").value
+		};
+		ajaxPost("ChangePassword", params, change_password_callback);
+}
+function change_password_callback(response,params) {
+	if (response === "s") {
+		_("profile_info").style.display = "Your password has changed. Please sign up with your new password!";
+	} else {
+		_("profile_info").innerHTML(response);
+	}
+}
+// (+) vijani (end)
+
+
+
