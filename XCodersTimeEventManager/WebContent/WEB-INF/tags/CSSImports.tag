@@ -6,7 +6,7 @@
 
 <!-- (+) 20150721 vijani (start) -->
 <!-- Custom CSS -->
-    <link rel="stylesheet" href="./bootstrap/css/landing-page.css" >
+    <!-- link rel="stylesheet" href="./bootstrap/css/landing-page.css" -->
     <link rel="stylesheet" href="./bootstrap/css/one-page-wonder.css" >
 <!-- Custom Fonts -->
     <link href="./bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">

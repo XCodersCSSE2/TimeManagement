@@ -60,7 +60,7 @@
 					
 					</div>
 				</form>
-				<div class="alert alert-info" role="alert" id="settings_info"
+				<div class="alert alert-info" role="alert" id="profile_info"
 				style="display: none">Saving settings...</div>
 			</xf:Tab>
 			</xf:TabBody>

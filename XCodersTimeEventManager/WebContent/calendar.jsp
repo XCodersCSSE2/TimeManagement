@@ -50,8 +50,11 @@
 								text="Delete Calendar" /></li>
 						<li class="divider"></li>
 						<!-- (+) Vijani (start) -->
-						<li><xf:ModalDialogToggleText dialogId="exportPDF"
-								text="Export Calendar as PDF" />
+						<li >
+		<a onclick="scheduler.toPDF('http://dhtmlxscheduler.appspot.com/export/pdf', 'color')" style="cursor: pointer;" >Export Calendar as PDF</a>
+						
+						<%-- <xf:ModalDialogToggleText dialogId="exportPDF"
+								text="" />--%>
 						<!-- (+) Vijani (end) -->
 						<!-- (-) Vijani (start) -->
 						<!-- <a href="#">Export Calendar</a>-->
@@ -59,12 +62,12 @@
 						
 						<!-- (+) 20150719 Ishantha (Start) -->
 						<xf:ModalDialogToggleText dialogId="exportxml"
-								text="Export Calendar as an XML" />				
+								text="Export Calendar To XML" />				
 						<!-- (+) 20150719 Ishantha (End) -->
 						
 						<!-- (+) 20150720 Ishantha (Start) -->
 						<xf:ModalDialogToggleText dialogId="importxml"
-								text="Import XML" />				
+								text="Import Calendar From XML" />				
 						<!-- (+) 20150720 Ishantha (End) -->
 						
 						</li>
@@ -272,14 +275,14 @@
 	
 	<!-- (+) 20150719 Ishantha (Start) -->
 	<!-- Dialog to export calendar as an XML-->
+	<form name="exportxmlform" method="POST" action="ExportXML" target="_blank">
 	<xf:ModalDialog dialogId="exportxml" title="Export Calendars as an XML">
-		<xf:ModalDialogBody>
-		<form name="exportxmlform" method="POST" action="ExportXML" target="_blank">
+		<xf:ModalDialogBody>		
 			<table class="table table-striped table-bordered table-condensed "
 				style="font-size: 14px" id="exportxml_table">
 				<c:forEach items="${calendarList}" var="c">
 					<tr>
-						<td style="width: 10px"><input type="checkbox"></td>
+						<td style="width: 10px"><input type="checkbox" name="cal_${c.name}" value="${c.id}"></td>
 						<td>${c.name}</td>
 						<td style="display: none">${c.id}</td>
 					</tr>
@@ -291,9 +294,9 @@
 		<xf:ModalDialogFooter id="exportxml_calendars_footer">
 			<xf:ModalDialogCloseButton />
 			<button class="btn btn-primary" >Export as an XML</button>
-		</xf:ModalDialogFooter>
-		</form>
+		</xf:ModalDialogFooter>		
 	</xf:ModalDialog>
+	</form>
 	<!-- (+) 20150719 Ishantha (End) -->
 	
 	<!-- (+) 20150720 Ishantha (Start) -->
@@ -308,7 +311,7 @@
 		</xf:ModalDialogBody>
 		<xf:ModalDialogFooter id="import_xml_footer">
 			<xf:ModalDialogCloseButton />
-			<button class="btn btn-primary" >Import</button>
+			<button class="btn btn-primary" >Import from xml</button>
 			</form>
 		</xf:ModalDialogFooter>
 	</xf:ModalDialog>
@@ -316,6 +319,7 @@
 
 	<xf:JSImports />
 	<script src="./js/calendar.js"></script>
+
 	<script src="./codebase/ext/dhtmlxscheduler_pdf.js"></script>
 	<script src="./codebase/ext/dhtmlxscheduler_serialize.js"></script>
 	<script src="./codebase/ext/dhtmlxscheduler_minical.js"></script>
