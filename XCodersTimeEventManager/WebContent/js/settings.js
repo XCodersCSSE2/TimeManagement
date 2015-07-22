@@ -41,17 +41,18 @@ function reset_settings(){
 function save_account_settings(){
 	_("profile_info").style.display = "";
 	var params = {
-			oldPassword : _("oldPassword").value,
-			newPassword : _("newPassword").value,
-			retypeNewPassword : _("retypeNewPassword").value
+			oldPassword : _("oldpassword").value,
+			newPassword : _("newpassword").value,
+			retypeNewPassword : _("retypenewpassword").value
 		};
 		ajaxPost("ChangePassword", params, change_password_callback);
 }
 function change_password_callback(response,params) {
 	if (response === "s") {
-		_("profile_info").style.display = "Your password has changed. Please sign up with your new password!";
+		_("profile_info").style.display = "";
+		_("profile_info").innerHTML ="Your password has changed. Please sign up with your new password!";
 	} else {
-		_("profile_info").innerHTML(response);
+		_("profile_info").innerHTML =response;
 	}
 }
 // (+) vijani (end)

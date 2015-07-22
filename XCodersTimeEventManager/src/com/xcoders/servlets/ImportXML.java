@@ -26,13 +26,14 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;  
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 import com.xcoders.controller.EventCalendarJpaController;
 import com.xcoders.controller.EventJpaController;
@@ -88,40 +89,53 @@ public class ImportXML extends HttpServlet {
         try {				  			  
 			  SAXBuilder builder = new SAXBuilder();
 			  File xmlCalendarFile = new File(savePath + File.separator + fileName);			
-			  
+			  System.out.println(xmlCalendarFile.getAbsolutePath());
 			  Document document = (Document) builder.build(xmlCalendarFile);
 			  Element rootNodeCalendar = document.getRootElement();		 
-			  		  	  		 			
-			  List calendarName = rootNodeCalendar.getChildren("Name");
-			  Element nodeCalendarName = (Element) calendarName.get(0);			
-			  String calendar_Name = nodeCalendarName.getText();				  
-			  	
+			  
+			  List<Element> calendars = rootNodeCalendar.getChildren("Calendar");
+			  
 			  EventMember eventMember = 
 					  new EventMemberJpaController().findEventMemberByUserName(user);	
-			  EventCalendar eventCalendar = new EventCalendar(calendar_Name,eventMember); 
-			  EventCalendarJpaController exjpa = new EventCalendarJpaController();	 
-			  exjpa.create(eventCalendar);
 			  
-			  List events = rootNodeCalendar.getChildren("Event");			  			  		  
-			  for (int i = 0; i < events.size(); i++) {				
-				  Element node = (Element) events.get(i); 
-				  Event eventdata = new Event();
+			  EventCalendarJpaController exjpa = new EventCalendarJpaController();
+			  System.out.println("_________________________________>");
+			  for(Element calendar : calendars){
+				  List calendarName = calendar.getChildren("Name");
+				  Element nodeCalendarName = (Element) calendarName.get(0);			
+				  String calendar_Name = nodeCalendarName.getText();				  
+				  	
 				  
-				 // eventdata.setId(Integer.parseInt(node.getChildText("ID")));
-				  eventdata.setText(node.getChildText("Text"));
-				  eventdata.setAddress(node.getChildText("Location"));
-				  eventdata.setStartDate(dateFormat.parse(node.getChildText("Start_Date")));
-				  eventdata.setEndDate(dateFormat.parse(node.getChildText("End_Date")));			  
-				  eventdata.setLocationX(node.getChildText("LocationX"));	
-				  eventdata.setLocationY( node.getChildText("LocationY"));	
-				  eventdata.setEventLength(Integer.parseInt(node.getChildText("Event_Length")));	
-				  eventdata.setEventPid(Integer.parseInt(node.getChildText("PID")));	
-				  eventdata.setRecType(node.getChildText("Record_Type"));
+				  	 
+				  EventCalendar eventCalendar = new EventCalendar(calendar_Name,eventMember); 
+				  exjpa.create(eventCalendar);
+				  List events = calendar.getChildren("Event");	
+				  List<Event> eventsList = new ArrayList<Event>();
+				  for (int i = 0; i < events.size(); i++) {				
+					  Element node = (Element) events.get(i); 
+					  Event eventdata = new Event();
+					  
+					 // eventdata.setId(Integer.parseInt(node.getChildText("ID")));
+					  eventdata.setText(node.getChildText("Text"));
+					  eventdata.setAddress(node.getChildText("Location"));
+					  eventdata.setStartDate(dateFormat.parse(node.getChildText("StartDate")));
+					  eventdata.setEndDate(dateFormat.parse(node.getChildText("EndDate")));			  
+					  eventdata.setLocationX(node.getChildText("LocationX"));	
+					  eventdata.setLocationY( node.getChildText("LocationY"));	
+					  eventdata.setEventLength(Integer.parseInt(node.getChildText("EventLength")));	
+					  eventdata.setEventPid(Integer.parseInt(node.getChildText("PId")));	
+					  eventdata.setRecType(node.getChildText("RecordType"));
+					  
+					  eventdata.setCalendar(eventCalendar);
+					  eventsList.add(eventdata);
+					  EventJpaController ejpc = new EventJpaController();		
+					  ejpc.create(eventdata);
+				  }
+				  eventCalendar.setEvents(eventsList);
 				  
-				  eventdata.setCalendar(eventCalendar);
-				  EventJpaController ejpc = new EventJpaController();		
-				  ejpc.create(eventdata);
-			  }				
+				  System.out.println("__saved cal " + eventCalendar.getName() + "_______________________________>");
+				  
+			  }
 		  }
 		  catch (IOException io) {
 			  System.out.println(io.getMessage());
@@ -133,7 +147,7 @@ public class ImportXML extends HttpServlet {
 			  e.printStackTrace();
 		  }      
         ServletContext sc = getServletContext();
-        sc.getRequestDispatcher("/calendar.jsp").forward(request, response);
+        sc.getRequestDispatcher("/index.jsp").forward(request, response);
 	}     
        
     private String extractFileName(Part part) {

@@ -137,7 +137,6 @@ function delete_calendars(){
 		}		
 	}
 	idList = idList.substring(0, idList.length - 1);
-	alert(idList);
 	delete_calendars_info_show("Please Wait...", "info", true);
 
 	var params = {

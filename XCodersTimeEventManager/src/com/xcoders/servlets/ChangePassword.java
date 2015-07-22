@@ -65,6 +65,7 @@ public class ChangePassword extends HttpServlet {
 			}
 
 			// action
+			System.out.println("1");
 			if (parametersValid) {
 				String encryptedOldPassword;
 				encryptedOldPassword = EncryptPassword.hashPassword(
@@ -75,14 +76,18 @@ public class ChangePassword extends HttpServlet {
 					reply = "Please login!";
 				} else {
 					System.out.println(">>> USer : " + user);
-					EventMember em = new EventMemberJpaController()
+					System.out.println("2");
+					EventMemberJpaController emj =  new EventMemberJpaController();
+					EventMember em = emj
 							.findEventMemberByUserName(user);
 					String userPassword = em.getPassword();
 					if (!encryptedOldPassword.equals(userPassword)) {
 						reply = "Your old password is incorrect, please login with correct password";
 						// call sign out here 
 					}else{
-						em.setPassword(newPassword);
+						em.setPassword(EncryptPassword.hashPassword(newPassword, "salt"));
+						emj.edit(em);
+						System.out.println("3");
 						reply = "s";
 						//reply = "Your password has changed. Please sign up with your new password!"; 
 						// call sign out here 
@@ -91,6 +96,8 @@ public class ChangePassword extends HttpServlet {
 			}
 
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
