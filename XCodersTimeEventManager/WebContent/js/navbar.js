@@ -17,6 +17,7 @@ function signup_callback(response,params) {
 	if (response === "s") {
 		$('#dialogSignup').modal('hide');
 		signup_info_hide();
+		location.reload();
 	} else {
 		signup_info_show(response, "warning", false);
 	}
