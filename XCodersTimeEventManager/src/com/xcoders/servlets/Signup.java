@@ -71,7 +71,23 @@ public class Signup extends HttpServlet {
 			
 			//validate
 			if(!password.equals(retypePassword)){
-				reply = "Passwords does not match!";
+				reply = "Passwords does not match";
+				parametersValid = false;
+			}else if(name.trim().isEmpty()){
+				reply = "Name cannot be empty";
+				parametersValid = false;
+			}else if(userName.trim().isEmpty()){
+				reply = "Username cannot be empty";
+				parametersValid = false;
+			}else if(password.trim().isEmpty()){
+				reply = "Password cannot be empty";
+				parametersValid = false;
+			}else if(email.trim().isEmpty()){
+				reply = "Email cannot be empty";
+				parametersValid = false;
+			}else if(!(email.contains("@") && email.contains("."))){
+				reply = "Invalid Email";
+				parametersValid = false;
 			}
 			
 			//(+) 20150615 Ishantha (Start)
@@ -120,7 +136,11 @@ public class Signup extends HttpServlet {
 					reply = "s";
 				}catch(Exception e){
 					System.out.println("registration error :" + e.getMessage());
-					reply = "Error";
+					if(e.getMessage().contains("Duplicate entry")){
+						reply = "User already registered";
+					}else{
+						reply = "Error";
+					}
 				}
 									
 			}

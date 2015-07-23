@@ -47,7 +47,7 @@
 						<li><xf:ModalDialogToggleText dialogId="newCalendar"
 								text="Create New Calendar" /></li>
 						<li><xf:ModalDialogToggleText dialogId="deleteCalendars"
-								text="Delete Calendar" /></li>
+								text="Delete Calendars" /></li>
 						<li class="divider"></li>
 						<!-- (+) Vijani (start) -->
 						<li >
